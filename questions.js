@@ -48,28 +48,36 @@ class question {
 
 }
 
-let questions = []
-
-questions[0] = new question("what is the definite article?", 
-"the", 
-"a", 
-"an", 
-"this", 
-"the")
-
-questions[1] = new question("He ----- swimming most days of the week", 
-"like", 
-"liked", 
-"will like", 
-"likes", 
-"likes")
+var questions = []
 
 let userAnswers = []
 
-userAnswers[0] = "the"
-userAnswers[1] = "likes"
+userAnswers[0] = "r"
+userAnswers[1] = "the"
+userAnswers[2] = "z"
 
-question.initiateQuiz(questions, userAnswers)
+fetch("http://localhost:3300/all_questions")
+.then((response) => response.json())
+.then((data) => {
+    console.log(data[0].question)
+    for(let i = 0; i < data.length; i++){
+        questions.push(new question(
+            data[i].question, 
+            data[i].answer1, 
+            data[i].answer2, 
+            data[i].answer3, 
+            data[i].answer4, 
+            data[i].correctAnswer
+        ))
+    }
+    question.initiateQuiz(questions, userAnswers)
+});
+
+
+
+
+
+
 
 
 
